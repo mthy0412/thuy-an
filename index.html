@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chúc mừng 20/10 - Cô Thuý An</title>
+<meta name="description" content="Lời chúc mừng ngày Phụ nữ Việt Nam 20/10 gửi tới cô Thuý An">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌼</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --moss: #082a17;
+    --forest: #0d3a20;
+    --leaf: #134e2a;
+    --sun: #ffd23f;
+    --gold: #f5a900;
+    --cream: #fffbe6;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: "Be Vietnam Pro", system-ui, sans-serif;
+    color: var(--cream);
+    background:
+      radial-gradient(ellipse 85% 55% at 50% 30%, #2f8f4a 0%, transparent 72%),
+      linear-gradient(180deg, var(--leaf) 0%, var(--forest) 55%, var(--moss) 100%);
+    background-attachment: fixed;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hills { position: fixed; left: 0; bottom: 0; width: 100%; height: 26vh; min-height: 140px; z-index: 0; pointer-events: none; }
+  canvas#fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+  main {
+    position: relative; z-index: 2; min-height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 28px 20px 14vh; text-align: center;
+  }
+
+  /* ---------- Chữ đầu trang ---------- */
+  .kicker { font-weight: 300; font-size: clamp(15px, 3.6vw, 19px); letter-spacing: .03em; opacity: 0; animation: rise 1s ease .3s forwards; }
+  .kicker b { font-weight: 600; color: var(--sun); }
+  .name {
+    font-family: "Dancing Script", "Snell Roundhand", cursive; font-weight: 700;
+    font-size: clamp(56px, 15vw, 96px); line-height: 1.15; white-space: nowrap;
+    color: var(--sun); text-shadow: 0 0 30px rgba(255,210,63,.4), 0 3px 0 rgba(0,0,0,.18);
+  }
+  .name span { display: inline-block; opacity: 0; filter: blur(10px); transform: translateY(16px); animation: letter .9s ease forwards; }
+  @keyframes letter { to { opacity: 1; filter: blur(0); transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  @keyframes fadein { to { opacity: 1; } }
+
+  /* ---------- Đóa hoa 5 cánh ---------- */
+  .hero-wrap {
+    position: relative; width: min(340px, 76vw, 40vh); aspect-ratio: 1; margin-top: 6px;
+    cursor: pointer; border-radius: 50%; outline: none;
+  }
+  .hero-wrap:focus-visible { outline: 3px solid var(--cream); outline-offset: 6px; }
+  .rays {
+    position: absolute; left: 50%; top: 50%; translate: -50% -50%;
+    width: min(1100px, 230vw); aspect-ratio: 1; border-radius: 50%; pointer-events: none;
+    background: repeating-conic-gradient(from 0deg, rgba(255,214,80,.22) 0 5deg, transparent 5deg 15deg);
+    -webkit-mask-image: radial-gradient(circle, #000 8%, transparent 62%);
+            mask-image: radial-gradient(circle, #000 8%, transparent 62%);
+    opacity: .12; transition: opacity 1.4s ease; animation: spin 120s linear infinite;
+  }
+  @keyframes spin { to { rotate: 360deg; } }
+  .hero-sway { position: absolute; inset: 0; animation: sway 7s ease-in-out 1s infinite alternate; }
+  .hero-sway svg { width: 100%; height: 100%; overflow: visible; display: block; filter: drop-shadow(0 12px 26px rgba(0,0,0,.35)); }
+  @keyframes sway { from { transform: rotate(-3deg) scale(1); } to { transform: rotate(3deg) scale(1.025); } }
+
+  .sepal, .core, .seed { opacity: 0; animation: fadein .8s ease forwards; }
+  .pw { transform-box: fill-box; transform-origin: 50% 100%; }
+  .petal { transform-box: fill-box; transform-origin: 50% 100%; transform: scale(0); opacity: 0; }
+  .petal.on { transform: none; opacity: 1; animation: bloom 1.2s cubic-bezier(.2,.9,.25,1.2) backwards; }
+  @keyframes bloom { 0% { transform: scale(0) rotate(-20deg); opacity: 0; } 35% { opacity: 1; } 100% { transform: scale(1) rotate(0); opacity: 1; } }
+  .pw.flash { animation: flashp .7s ease; }
+  @keyframes flashp { 40% { transform: scale(1.09); filter: brightness(1.18); } }
+
+
+  .ring { fill: none; stroke: #ffe680; stroke-width: 2.5; transform-box: fill-box; transform-origin: center; animation: ring 1.9s ease-out infinite; }
+  @keyframes ring { from { transform: scale(.9); opacity: .9; } to { transform: scale(2.2); opacity: 0; } }
+
+  /* ---------- Cảm nhận ---------- */
+  .feel { min-height: 112px; max-width: 30em; margin-top: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; opacity: 0; animation: rise 1s ease 1.6s forwards; }
+  .feel.swap > * { animation: rise .6s ease both; }
+  .feel-title { font-family: "Dancing Script", cursive; font-weight: 700; font-size: clamp(34px, 8.5vw, 46px); line-height: 1.15; color: var(--sun); text-shadow: 0 0 22px rgba(255,210,63,.35); }
+  .feel-title:empty { display: none; }
+  .feel-text { font-weight: 300; font-size: clamp(15px, 3.8vw, 18px); line-height: 1.65; }
+
+  .chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 34em; margin-top: 12px; min-height: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; cursor: pointer;
+    font: 400 13.5px "Be Vietnam Pro", sans-serif; color: var(--cream);
+    background: rgba(6,32,18,.5); border: 1px solid rgba(255,214,90,.4); border-radius: 999px;
+    animation: chipin .6s cubic-bezier(.2,1.5,.4,1) backwards; transition: background .2s, border-color .2s;
+  }
+  .chip[hidden] { display: none; }
+  .chip:hover, .chip.cur { background: rgba(255,210,63,.18); border-color: var(--sun); }
+  @keyframes chipin { from { transform: scale(.4); opacity: 0; } }
+
+  .btn {
+    margin-top: 22px; font: 600 16px/1 "Be Vietnam Pro", sans-serif; color: #3a2a00;
+    background: linear-gradient(135deg, #ffe680, #ffb800); border: 0; border-radius: 999px;
+    padding: 15px 30px; cursor: pointer; box-shadow: 0 8px 28px rgba(255,190,0,.35);
+    opacity: 0; animation: rise 1s ease 2.2s forwards; transition: transform .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn:active { transform: scale(.97); }
+  .btn.ready { opacity: 1; animation: glow 1.6s ease-in-out infinite; }
+  @keyframes glow { 0%,100% { box-shadow: 0 8px 28px rgba(255,190,0,.35); } 50% { box-shadow: 0 8px 44px rgba(255,210,63,.85); } }
+  .btn:focus-visible, .again:focus-visible, .chip:focus-visible { outline: 3px solid var(--cream); outline-offset: 4px; }
+
+  .wish {
+    display: none; max-width: 580px; margin-top: 26px; padding: 26px 28px; text-align: left;
+    border: 1px solid rgba(255,214,90,.32); border-radius: 22px;
+    background: rgba(6,32,18,.62); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    line-height: 1.85; font-weight: 300; font-size: clamp(15px, 3.8vw, 17px);
+  }
+  .wish.show { display: block; animation: rise .9s ease both; }
+  .wish p + p { margin-top: 12px; }
+  .wish strong { font-weight: 600; color: var(--sun); }
+  .wish .sign { margin-top: 16px; text-align: right; font-family: "Dancing Script", cursive; font-weight: 700; font-size: 30px; color: var(--sun); }
+  .again { display: none; margin-top: 18px; background: none; border: 0; cursor: pointer; color: var(--cream); font: 400 14px "Be Vietnam Pro", sans-serif; text-decoration: underline; text-underline-offset: 4px; }
+  .again.show { display: inline-block; }
+  .hint { margin-top: 18px; font-size: 13px; color: rgba(255,251,230,.6); opacity: 0; animation: rise 1s ease 3s forwards; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0s !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<svg class="hills" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+  <path fill="#0f4a28" d="M0,150 C240,70 420,190 720,130 C1020,70 1200,170 1440,100 L1440,320 L0,320Z"/>
+  <path fill="#0a331c" d="M0,220 C300,150 520,260 820,200 C1100,150 1280,240 1440,190 L1440,320 L0,320Z"/>
+</svg>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<main>
+  <p class="kicker">Chúc mừng ngày Phụ nữ Việt Nam <b>20/10</b></p>
+  <p class="name" id="name" aria-label="Cô Thuý An">Cô Thuý An</p>
+
+  <div class="hero-wrap" id="hero-wrap" role="button" tabindex="0" aria-label="Mọc cánh hoa đầu tiên">
+    <div class="rays" id="rays"></div>
+    <div class="hero-sway">
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <linearGradient id="gFront" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#ffab00"/><stop offset=".55" stop-color="#ffcf2e"/><stop offset="1" stop-color="#ffe86a"/>
+          </linearGradient>
+          <radialGradient id="gCore" cx=".5" cy=".5" r=".5">
+            <stop offset="0" stop-color="#c2610c"/><stop offset=".8" stop-color="#8a4508"/><stop offset="1" stop-color="#5a2a05"/>
+          </radialGradient>
+        </defs>
+        <g id="hero" transform="translate(200,200)"></g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="feel" id="feel" aria-live="polite">
+    <div class="feel-title" id="feelTitle"></div>
+    <p class="feel-text" id="feelText">Mỗi cánh hoa là một điều em nghĩ về cô. Chạm vào nhụy hoa để cánh đầu tiên mọc lên.</p>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <button class="btn" id="main" type="button">Mọc cánh hoa đầu tiên</button>
+
+  <section class="wish" id="wish" aria-live="polite">
+    <p>Cô ơi, 20/10 này em không chỉ chúc cô như chúc một người thầy, mà như chúc một người bạn.</p>
+    <p>Năm cánh hoa ở trên là năm điều em luôn thấy ở cô: <strong>hay cười, mạnh mẽ, dịu dàng, tràn đầy năng lượng</strong> và một nội tâm thật sâu sắc.</p>
+    <p>Cô giống hoa dã quỳ lắm. Không cần ai nâng niu trong nhà kính, vẫn tự mình nở vàng trên sườn đồi, sáng cả một khoảng trời.</p>
+    <p>Chúc cô luôn khỏe, cười thật nhiều, và mãi là chính cô. Cảm ơn cô vì đã từ một cô giáo trở thành người bạn của em.</p>
+    <div class="sign">Học trò cũ, bạn của cô</div>
+  </section>
+  <button class="again" id="again" type="button">Thả thêm hoa nữa</button>
+  <p class="hint">Chạm vào khoảng trống bất kỳ để trồng thêm một đóa dã quỳ. Di chuột để tạo gió.</p>
+</main>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rand = (a, b) => a + Math.random() * (b - a);
+  const pick = a => a[(Math.random() * a.length) | 0];
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  /* ====== Nội dung: mỗi cánh hoa là một cảm nhận (sửa tại đây) ====== */
+  const FEELS = [
+    { emo: '☀️', title: 'Hay cười',            text: 'Nụ cười của cô làm cả căn phòng sáng lên, kể cả những ngày trời xám.' },
+    { emo: '💪', title: 'Mạnh mẽ',             text: 'Cô đi qua bao nhiêu gió bão mà vẫn đứng vững, vẫn hiên ngang.' },
+    { emo: '🌷', title: 'Dịu dàng',            text: 'Mạnh mẽ nhưng chưa bao giờ cứng nhắc. Cô luôn biết nhẹ nhàng với người khác.' },
+    { emo: '⚡', title: 'Năng lượng tích cực', text: 'Ở bên cô, em thấy chuyện gì cũng có cách giải quyết, và mình làm được.' },
+    { emo: '🌙', title: 'Nội tâm sâu sắc',     text: 'Cô hiểu người khác bằng sự lặng lẽ, và những điều cô nói luôn có chiều sâu.' }
+  ];
+
+  /* ================= 1. Đóa dã quỳ 5 cánh (SVG) ================= */
+  const NS = 'http://www.w3.org/2000/svg';
+  const hero = document.getElementById('hero');
+  const mk = (tag, attrs, cls) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (cls) e.setAttribute('class', cls); return e; };
+
+  // cánh dã quỳ: bầu, đầu cánh có khía nhẹ
+  const petalD = (len, w) =>
+    `M0,-24 C${w*.9},${-len*.2} ${w*1.15},${-len*.75} ${w*.55},${-len*.97} ` +
+    `Q${w*.2},${-len*1.03} 0,${-len*.95} Q${-w*.2},${-len*1.03} ${-w*.55},${-len*.97} ` +
+    `C${-w*1.15},${-len*.75} ${-w*.9},${-len*.2} 0,-24Z`;
+
+  // đài hoa xanh (hé ra giữa các cánh)
+  for (let i = 0; i < 5; i++) {
+    const g = mk('g', { transform: `rotate(${36 + i * 72})` });
+    const s = mk('path', { d: `M0,-10 C22,-40 22,-80 0,-112 C-22,-80 -22,-40 0,-10Z`, fill: '#3f9b45' }, 'sepal');
+    s.style.animationDelay = (0.3 + i * .08) + 's';
+    g.appendChild(s); hero.appendChild(g);
+  }
+
+  const ANG = [-3, 4, -2, 3, -4], LEN = [168, 160, 172, 158, 166];
+  const petals = [];
+  for (let i = 0; i < 5; i++) {
+    const angle = i * 72 + ANG[i], len = LEN[i], w = len * .3;
+    const g  = mk('g', { transform: `rotate(${angle})` });
+    const pw = mk('g', {}, 'pw');
+    const pt = mk('g', {}, 'petal');
+    pt.appendChild(mk('path', { d: petalD(len, w), fill: 'url(#gFront)', stroke: 'rgba(150,80,0,.28)', 'stroke-width': 1.2 }));
+    pt.appendChild(mk('path', { d: `M0,-40 L0,${-len*.82}`, stroke: 'rgba(190,110,0,.28)', 'stroke-width': 1.5, 'stroke-linecap': 'round', fill: 'none' }));
+    pw.appendChild(pt); g.appendChild(pw); hero.appendChild(g);
+    petals.push({ angle, len, pw, pt });
+  }
+
+  // nhụy
+  const core = mk('circle', { r: 34, fill: 'url(#gCore)' }, 'core');
+  core.style.animationDelay = '.5s'; hero.appendChild(core);
+  const seedColors = ['#fcd34d', '#f59e0b', '#d97706'];
+  for (let n = 1; n <= 70; n++) {
+    const rad = 3.3 * Math.sqrt(n), ang = n * 137.508 * Math.PI / 180;
+    const c = mk('circle', {
+      cx: (rad * Math.cos(ang)).toFixed(2), cy: (rad * Math.sin(ang)).toFixed(2),
+      r: (1.5 + n / 70 * 1.1).toFixed(2), fill: seedColors[n % 3]
+    }, 'seed');
+    c.style.animationDelay = (0.7 + n * 0.008) + 's';
+    hero.appendChild(c);
+  }
+
+  // vòng gợi ý "chạm vào đây"
+  const ring = mk('circle', { r: 40 }, 'ring'); hero.appendChild(ring);
+
+  /* ================= 2. Tên hiện từng chữ ================= */
+  const nameEl = document.getElementById('name');
+  const text = nameEl.textContent; nameEl.textContent = '';
+  [...text].forEach((ch, i) => {
+    const s = document.createElement('span');
+    s.textContent = ch === ' ' ? '\u00A0' : ch;
+    s.style.animationDelay = (0.8 + i * 0.09) + 's';
+    nameEl.appendChild(s);
+  });
+
+  /* ================= 3. Canvas: vườn dã quỳ, gió, phấn hoa ================= */
+  const cv = document.getElementById('fx');
+  const ctx = cv.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+
+  const ease = {
+    out: t => 1 - Math.pow(1 - t, 3),
+    back: t => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2); }
+  };
+  const YELLOWS = ['#ffd23f', '#ffe066', '#ffc21a', '#fff0a8', '#f5a900'];
+  const STEMS = ['#5cb85c', '#4caf50', '#66bb6a', '#57a957'];
+
+  // hoa 5 cánh bầu, đầu cánh khía nhẹ
+  function petalPath(len, w) {
+    ctx.moveTo(0, -len * .14);
+    ctx.bezierCurveTo(w * .9, -len * .2, w * 1.15, -len * .75, w * .55, -len * .97);
+    ctx.quadraticCurveTo(w * .2, -len * 1.03, 0, -len * .95);
+    ctx.quadraticCurveTo(-w * .2, -len * 1.03, -w * .55, -len * .97);
+    ctx.bezierCurveTo(-w * 1.15, -len * .75, -w * .9, -len * .2, 0, -len * .14);
+  }
+  function drawHead(r, open) {
+    if (open <= 0.001) return;
+    const len = r * open, w = len * .3;
+    for (let i = 0; i < 5; i++) {
+      ctx.save(); ctx.rotate(i * Math.PI * 2 / 5);
+      ctx.fillStyle = '#ffc61a'; ctx.beginPath(); petalPath(len, w); ctx.fill();
+      ctx.fillStyle = '#ffe270'; ctx.beginPath(); petalPath(len * .68, w * .68); ctx.fill();
+      ctx.restore();
+    }
+    ctx.fillStyle = '#8a4b08'; ctx.beginPath(); ctx.arc(0, 0, r * .2 * open, 0, 6.283); ctx.fill();
+    if (r >= 18) {
+      ctx.fillStyle = '#f3b23a';
+      for (let k = 1; k <= 9; k++) {
+        const rad = r * .055 * Math.sqrt(k) * open, a = k * 2.399963;
+        ctx.beginPath(); ctx.arc(rad * Math.cos(a), rad * Math.sin(a), Math.max(r * .022, .8), 0, 6.283); ctx.fill();
+      }
+    }
+  }
+  function drawLeaf(x, y, ang, L) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(ang);
+    ctx.fillStyle = '#4fae52';
+    ctx.beginPath(); ctx.moveTo(0, 0);
+    ctx.quadraticCurveTo(L * .5, -L * .3, L, 0);
+    ctx.quadraticCurveTo(L * .5, L * .3, 0, 0);
+    ctx.fill(); ctx.restore();
+  }
+  function drawPetal(x, y, s, rot, color, alpha) {
+    ctx.save(); ctx.translate(x, y); ctx.rotate(rot); ctx.globalAlpha = alpha; ctx.fillStyle = color;
+    ctx.beginPath(); ctx.moveTo(0, -s);
+    ctx.bezierCurveTo(s * .6, -s * .5, s * .5, s * .6, 0, s);
+    ctx.bezierCurveTo(-s * .5, s * .6, -s * .6, -s * .5, 0, -s);
+    ctx.fill(); ctx.restore();
+  }
+  function drawStar(x, y, s, alpha) {
+    ctx.save(); ctx.translate(x, y); ctx.globalAlpha = alpha; ctx.fillStyle = '#fff3a0';
+    ctx.beginPath();
+    ctx.moveTo(0, -s); ctx.lineTo(s * .25, -s * .25); ctx.lineTo(s, 0); ctx.lineTo(s * .25, s * .25);
+    ctx.lineTo(0, s); ctx.lineTo(-s * .25, s * .25); ctx.lineTo(-s, 0); ctx.lineTo(-s * .25, -s * .25);
+    ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+
+  // gió
+  let wind = 0, lastX = null;
+  addEventListener('pointermove', e => {
+    if (lastX !== null) wind = clamp(wind + (e.clientX - lastX) * 0.02, -3.5, 3.5);
+    lastX = e.clientX;
+  });
+
+  // hoa mọc từ đất (thân trồi lên rồi nở)
+  const flowers = [];
+  function makeFlower(o) {
+    return Object.assign({
+      born: performance.now(), grow: 1200, phase: rand(0, 6.28), bend: 0, rot: rand(0, 6.28),
+      alpha: 1, dying: false, user: false, burst: false, leafSide: Math.random() < .5 ? 1 : -1,
+      stem: pick(STEMS)
+    }, o);
+  }
+  function buildField(instant) {
+    for (let i = flowers.length - 1; i >= 0; i--) if (!flowers[i].user) flowers.splice(i, 1);
+    const N = W < 600 ? 11 : 20, scale = W < 600 ? .75 : 1, t0 = performance.now();
+    const field = [];
+    for (let i = 0; i < N; i++) {
+      const x = (i + rand(.15, .85)) / N * W;
+      const edge = Math.abs(x - W / 2) / (W / 2);
+      const hy = H - (rand(.08, .26) + edge * rand(0, .26)) * H;
+      field.push({
+        bx: x + rand(-30, 30), by: H + 8, hx: x, hy,
+        r: rand(26, 46) * scale, bend: rand(-.25, .25) * (H - hy),
+        grow: rand(1000, 1700), delay: 1400 + Math.random() * 2200
+      });
+    }
+    field.sort((a, b) => a.r - b.r).forEach(f => {
+      const fl = makeFlower(f);
+      fl.born = instant || reduce ? t0 - 6000 : t0 + f.delay;
+      flowers.unshift(fl);
+    });
+  }
+  function plant(hx, hy, delay = 0, r) {
+    const users = flowers.filter(f => f.user && !f.dying);
+    if (users.length > 34) users[0].dying = true;
+    const h = H - hy, scale = W < 600 ? .8 : 1;
+    flowers.push(makeFlower({
+      bx: clamp(hx + rand(-50, 50), 0, W), by: H + 8, hx, hy,
+      r: (r || rand(28, 46)) * scale, bend: rand(-.3, .3) * h,
+      grow: 700 + h * .9, born: performance.now() + delay, user: true
+    }));
+  }
+
+  function renderFlower(f, now, total) {
+    const e = now - f.born; if (e < 0) return;
+    const p = ease.out(Math.min(e / f.grow, 1));
+    const amp = 6 + f.r * .5;
+    const sw = reduce ? 0 : (Math.sin(now / 900 + f.phase) * .6 + total * .8) * amp;
+    const x0 = f.bx, y0 = f.by;
+    const cx = (f.bx + f.hx) / 2 + f.bend + sw, cy = (f.by + f.hy) / 2;
+    const ex = f.hx + sw * .7, ey = f.hy;
+    const pt = u => { const a = (1 - u) * (1 - u), b = 2 * (1 - u) * u, c = u * u; return [a * x0 + b * cx + c * ex, a * y0 + b * cy + c * ey]; };
+
+    ctx.globalAlpha = f.alpha;
+    ctx.strokeStyle = f.stem; ctx.lineWidth = Math.max(2.2, f.r * .09); ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(x0, y0);
+    for (let k = 1; k <= 18; k++) { const [x, y] = pt(p * k / 18); ctx.lineTo(x, y); }
+    ctx.stroke();
+
+    [.28, .52].forEach((u, idx) => {
+      if (p <= u) return;
+      const s = Math.min((p - u) / .15, 1), [x, y] = pt(u);
+      const tx = 2 * (1 - u) * (cx - x0) + 2 * u * (ex - cx), ty = 2 * (1 - u) * (cy - y0) + 2 * u * (ey - cy);
+      drawLeaf(x, y, Math.atan2(ty, tx) + (idx ? -1 : 1) * f.leafSide * 1.05, f.r * .85 * s);
+    });
+
+    const [hx, hy] = pt(p);
+    const bt = (e - f.grow * .8) / 900;
+    if (bt <= 0) {
+      ctx.fillStyle = '#4aa34a'; ctx.beginPath(); ctx.arc(hx, hy, f.r * .14, 0, 6.283); ctx.fill();
+    } else {
+      ctx.save(); ctx.translate(hx, hy);
+      ctx.rotate(f.rot + (reduce ? 0 : now / 9000) + sw * .01);
+      drawHead(f.r, ease.back(Math.min(bt, 1)));
+      ctx.restore();
+      if (f.user && !f.burst && bt > .5) { f.burst = true; burst(hx, hy, 12, true); }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // cánh hoa rơi, phấn hoa, pháo hoa
+  const falling = [], pollen = [], bursts = [];
+  function newFalling(top) {
+    return {
+      x: rand(0, W), y: top ? rand(-H * .2, -10) : rand(0, H), s: rand(6, 12),
+      rot: rand(0, 6.28), vr: rand(-.02, .02), vy: rand(.5, 1.3), sway: rand(.4, 1.1),
+      ph: rand(0, 6.28), c: pick(YELLOWS), a: rand(.6, .95)
+    };
+  }
+  function initParticles() {
+    falling.length = 0; pollen.length = 0;
+    const nf = reduce ? 0 : (W < 600 ? 22 : 40), np = reduce ? 10 : (W < 600 ? 26 : 46);
+    for (let i = 0; i < nf; i++) falling.push(newFalling(false));
+    for (let i = 0; i < np; i++) pollen.push({ x: rand(0, W), y: rand(0, H), r: rand(1, 2.6), vy: rand(.15, .55), ph: rand(0, 6.28), tw: rand(.6, 1.6) });
+  }
+  function burst(x, y, n = 36, small = false) {
+    if (reduce) n = Math.min(n, 8);
+    for (let i = 0; i < n; i++) {
+      const ang = rand(0, 6.283), sp = small ? rand(1, 4) : rand(2, 8), r = Math.random();
+      bursts.push({
+        x, y, vx: Math.cos(ang) * sp, vy: Math.sin(ang) * sp - (small ? 1 : 2.5),
+        s: small ? rand(3, 6) : rand(5, 12), rot: rand(0, 6.28), vr: rand(-.15, .15),
+        life: 1, decay: rand(.006, .013), c: pick(YELLOWS),
+        kind: r < .5 ? 'petal' : r < .75 ? 'flower' : 'star'
+      });
+    }
+  }
+
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min((now - last) / 16.67, 3); last = now;
+    ctx.clearRect(0, 0, W, H);
+    wind *= Math.pow(.96, dt);
+    const total = reduce ? 0 : wind + Math.sin(now / 3000) * .6 + Math.sin(now / 1300) * .3;
+
+    ctx.globalCompositeOperation = 'lighter';
+    for (const q of pollen) {
+      q.ph += .02 * dt; q.y -= q.vy * dt; q.x += (Math.sin(q.ph) * .3 + total * .35) * dt;
+      if (q.y < -10) { q.y = H + 10; q.x = rand(0, W); }
+      if (q.x < -10) q.x = W + 10; if (q.x > W + 10) q.x = -10;
+      const tw = .5 + .5 * Math.sin(now / 500 * q.tw + q.ph);
+      ctx.fillStyle = `rgba(255,220,100,${.12 * tw})`; ctx.beginPath(); ctx.arc(q.x, q.y, q.r * 4, 0, 6.283); ctx.fill();
+      ctx.fillStyle = `rgba(255,240,170,${.35 + .5 * tw})`; ctx.beginPath(); ctx.arc(q.x, q.y, q.r, 0, 6.283); ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+
+    for (const p of falling) {
+      p.ph += .02 * dt; p.x += (Math.sin(p.ph) * p.sway + total * 1.3) * dt;
+      p.y += p.vy * dt; p.rot += p.vr * dt;
+      if (p.y > H + 20 || p.x < -40 || p.x > W + 40) Object.assign(p, newFalling(true));
+      drawPetal(p.x, p.y, p.s, p.rot + Math.sin(p.ph) * .5, p.c, p.a);
+    }
+    ctx.globalAlpha = 1;
+
+    for (let i = flowers.length - 1; i >= 0; i--) {
+      const f = flowers[i];
+      if (f.dying) { f.alpha -= .02 * dt; if (f.alpha <= 0) flowers.splice(i, 1); }
+    }
+    for (const f of flowers) renderFlower(f, now, total);
+
+    for (let i = bursts.length - 1; i >= 0; i--) {
+      const b = bursts[i];
+      b.vy += .11 * dt; b.vx *= .985; b.x += b.vx * dt; b.y += b.vy * dt; b.rot += b.vr * dt; b.life -= b.decay * dt;
+      if (b.life <= 0 || b.y > H + 30) { bursts.splice(i, 1); continue; }
+      const a = Math.max(b.life, 0);
+      if (b.kind === 'petal') drawPetal(b.x, b.y, b.s, b.rot, b.c, a);
+      else if (b.kind === 'star') drawStar(b.x, b.y, b.s * .8, a * (.6 + Math.sin(now / 60 + i) * .4));
+      else { ctx.save(); ctx.globalAlpha = a; ctx.translate(b.x, b.y); ctx.rotate(b.rot); drawHead(b.s * 1.2, 1); ctx.restore(); }
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(frame);
+  }
+
+  initParticles(); buildField(false);
+  requestAnimationFrame(frame);
+
+  let rt;
+  addEventListener('resize', () => {
+    clearTimeout(rt);
+    rt = setTimeout(() => { resize(); initParticles(); buildField(true); }, 200);
+  });
+
+  /* ================= 4. Tương tác: mỗi cánh hoa = một cảm nhận ================= */
+  const heroWrap = document.getElementById('hero-wrap');
+  const rays = document.getElementById('rays');
+  const feel = document.getElementById('feel');
+  const feelTitle = document.getElementById('feelTitle');
+  const feelText = document.getElementById('feelText');
+  const chipsEl = document.getElementById('chips');
+  const mainBtn = document.getElementById('main');
+  const wish = document.getElementById('wish');
+  const again = document.getElementById('again');
+  let grown = 0, curChip = -1;
+
+  // chip cho từng cảm nhận (hiện dần khi cánh mọc)
+  const chips = FEELS.map((f, i) => {
+    const c = document.createElement('button');
+    c.type = 'button'; c.className = 'chip'; c.hidden = true;
+    c.textContent = `${f.emo} ${f.title}`;
+    c.addEventListener('click', () => { showFeel(i); flash(i); });
+    chipsEl.appendChild(c);
+    return c;
+  });
+
+  function showFeel(i) {
+    const f = FEELS[i];
+    feelTitle.textContent = `${f.emo} ${f.title}`;
+    feelText.textContent = f.text;
+    feel.classList.remove('swap'); void feel.offsetWidth; feel.classList.add('swap');
+    if (curChip >= 0) chips[curChip].classList.remove('cur');
+    chips[i].classList.add('cur'); curChip = i;
+  }
+  function flash(i) {
+    const p = petals[i];
+    [p.pw].forEach(el => { el.classList.remove('flash'); void el.getBoundingClientRect(); el.classList.add('flash'); });
+    const t = tipOf(i); burst(t[0], t[1], 14, true);
+  }
+  function tipOf(i) {
+    const r = heroWrap.getBoundingClientRect(), sc = r.width / 400, p = petals[i];
+    const a = p.angle * Math.PI / 180, R = p.len * .8 * sc;
+    return [r.left + r.width / 2 + Math.sin(a) * R, r.top + r.height / 2 - Math.cos(a) * R];
+  }
+  function updateButton() {
+    if (grown === 0) mainBtn.textContent = 'Mọc cánh hoa đầu tiên';
+    else if (grown < 5) mainBtn.textContent = `Mọc thêm một cánh (${grown}/5)`;
+    else { mainBtn.textContent = 'Mở lời nhắn của em'; mainBtn.classList.add('ready'); }
+    heroWrap.setAttribute('aria-label', grown < 5 ? 'Mọc thêm một cánh hoa' : 'Đóa hoa đã nở đủ năm cánh');
+  }
+
+  function growPetal() {
+    if (grown >= 5) return;
+    const i = grown++;
+    const p = petals[i];
+    p.pt.classList.add('on');
+    if (ring.parentNode) ring.remove();
+    chips[i].hidden = false;
+    showFeel(i);
+    rays.style.opacity = (.12 + grown * .18).toFixed(2);
+    wind = clamp(wind + (i % 2 ? -2.2 : 2.2), -3.5, 3.5);
+    const t = tipOf(i); burst(t[0], t[1], 30, true);
+    if (grown === 5) {
+      const r = heroWrap.getBoundingClientRect();
+      setTimeout(() => { burst(r.left + r.width / 2, r.top + r.height / 2, 70); wind = 3; }, 900);
+    }
+    updateButton();
+  }
+
+  function celebrate() {
+    wind = 4;
+    burst(W / 2, H * .3, 70);
+    [300, 650, 1000].forEach(t => setTimeout(() => burst(rand(W * .12, W * .88), rand(H * .12, H * .45), 50), t));
+    const N = W < 600 ? 6 : 12;
+    for (let k = 0; k < N; k++) {
+      const x = k % 2 ? rand(W * .76, W * .97) : rand(W * .03, W * .24);
+      plant(x, rand(H * .22, H * .6), 600 + k * 140);
+    }
+  }
+  function openWish() {
+    wish.classList.add('show'); again.classList.add('show');
+    mainBtn.style.display = 'none';
+    celebrate();
+    setTimeout(() => wish.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }
+
+  // bấm vào hoa/nút/chip không trồng thêm hoa nền
+  [heroWrap, mainBtn, again, chipsEl].forEach(el => el.addEventListener('pointerdown', e => e.stopPropagation()));
+  heroWrap.addEventListener('click', growPetal);
+  heroWrap.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); growPetal(); } });
+  mainBtn.addEventListener('click', () => (grown < 5 ? growPetal() : openWish()));
+  again.addEventListener('click', celebrate);
+
+  // chạm vào khoảng trống: trồng một đóa dã quỳ
+  addEventListener('pointerdown', e => { plant(e.clientX, e.clientY); burst(e.clientX, e.clientY, 10, true); });
+})();
+</script>
+</body>
+</html>
